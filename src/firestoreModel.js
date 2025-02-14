@@ -13,7 +13,7 @@ global.setDoc= setDoc
 global.db= db
 
 /* Replace NN with your TW2_TW3 group number! */
-const COLLECTION="dinnerModelNN";
+const COLLECTION="dinnerModel11";
 
 // TODO: read the code above
 // TODO: export the function connectToPersistence, it can be empty for starters

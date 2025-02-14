@@ -1,7 +1,6 @@
-import { FlatList, StyleSheet, Text, View } from "react-native"
-
+import { FlatList, StyleSheet, Text, View } from "react-native";
 // un-comment when needed:
-//import {sortIngredients} from "/src/utilities.js";
+import {sortIngredients} from "src/utilities";
 
 /* Functional JSX component. Name must start with capital letter */
 export function SummaryView(props) {
@@ -12,38 +11,42 @@ export function SummaryView(props) {
         Summary for <Text>{props.people}</Text> persons:
       </Text>
 
-      {/* TW 1.3: remove this line (and the TW1.3 one below) to uncomment
-
+      {/* testID="summary-row" */}
       <View style={styles.card}>
+        {/*
         <View  style={styles.row}>
           <Text>Name</Text>
           <Text>Aisle</Text>
           <Text>Quantity</Text>
         </View>
-        <FlatList
-          data={props.TODO}
+        */}
+        
+        <FlatList 
+          data={sortIngredients(props.ingredients)}
           renderItem={renderIngredientRowCB}
+          keyExtractor={item => item.id}
         />
       </View>
-
-      TW1.3 remove this line to uncomment */}
     </View>
-  )
+  );
 
   /* Callback for rendering each ingredient row - implement in TW 1.3 */
   function renderIngredientRowCB(element) {
-    const ingr = element.item // FlatList sends objects with a property called item
+    const ingr= element.item;    // FlatList sends objects with a property called item
     return (
       <View testID="summary-row" style={styles.row}>
-        <Text>{ingr.name}</Text>
-        <Text>{"TODO aisle"}</Text>
-        <Text>
-          {"TODO amount"} {"TODO unit"}
-        </Text>
+        <View>
+          <Text style={styles.ingredient}>{ingr.name}</Text>
+          <Text>{ingr.aisle}</Text>
+        </View>
+        <View>
+          <Text style={styles.ingredientAmount}>{(props.people * ingr.amount).toFixed(2)} {ingr.unit}</Text>
+        </View>
       </View>
-    )
+    );
   }
 }
+
 
 // Basic styles to get started
 const styles = StyleSheet.create({
@@ -54,5 +57,15 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     padding: 8,
+    justifyContent: "space-between",
   },
-})
+  ingredient:{
+    fontSize: 17,
+    fontWeight: "bold",
+  },
+  ingredientAmount:{
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+});

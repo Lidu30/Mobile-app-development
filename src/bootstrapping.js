@@ -8,7 +8,8 @@ import { dishesConst } from "./dishesConst"
 
 configure({ enforceActions: "never" })
 
-export const reactiveModel = "TODO make a reactive model here"
+import {model} from "./DinnerModel";
+export const reactiveModel = observable(model);
 
 // make the model and a few example dishes available in the browser Console for testing
 global.myModel = reactiveModel
