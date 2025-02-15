@@ -42,3 +42,11 @@ export function getMenuDetails(ids_array){
   }
 
 }
+
+export function getDishDetails(id){
+  return getMenuDetails([id]).then(arrayToObjectACB);
+
+  function arrayToObjectACB(dishArray){
+    return dishArray[0];
+  }
+}
