@@ -1,21 +1,18 @@
-import { PROXY_URL, PROXY_KEY, GROUP_NUMBER } from "./apiConfig.js";
+import { PROXY_URL, PROXY_KEY} from "./apiConfig.js";
 
-async function searchDishes(searchParams) {
-    const url = `${PROXY_URL}/recipes/complexSearch`
+export function searchDishes(searchParams) {
+    const quesryString = new URLSearchParams(searchParams); 
+    const url = `${PROXY_URL}/recipes/complexSearch?${quesryString}`;
 
-    const options = {
-        method: "GET",
+    return fetch(url, {
         headers: {
             "X-DH2642-Key": PROXY_KEY,
             "X-DH2642-Group": 11,
         }
-    };
+    }).then(response => response.json()).then(someACB);
 
-    try {
-        const response = await fetch(url, options);
-        const result = await response.text();
-        console.log(result);
-    } catch (error) {
-        console.error(error);
+    function someACB(response){
+      return response.results;
     }
+   
 }
