@@ -9,15 +9,17 @@ export function searchDishes(searchParams) {
             "X-DH2642-Key": PROXY_KEY,
             "X-DH2642-Group": 11,
         }
-    }).then(gotResponseACB).then(someACB);
+    }).then(gotResponseACB).then(getPropertiesACB);
 
-    function someACB(response){
+    /*
+    function gotResponseACB(response){
+        return response.json();
+    }   
+    */
+
+    function getPropertiesACB(response){
       return response.results;
     }
-
-    function gotResponseACB(response){
-      return response.json();
-    }   
 }
 
 
@@ -33,18 +35,17 @@ export function getMenuDetails(ids_array){
     }
 
   }).then(gotResponseACB);
-  
-  function gotResponseACB(response){
+}
+
+function gotResponseACB(response){
     if (!response.ok){
       throw new Error(`HTTP Error! Status: ${response.status}`)
     }
     return response.json();
-  }
-
 }
 
 export function getDishDetails(id){
-  return getMenuDetails([id]).then(arrayToObjectACB);
+  return getMenuDetails([id]).then(arrayToObjectACB); // TODO: change the name of arrayToObjectACB
 
   function arrayToObjectACB(dishArray){
     return dishArray[0];

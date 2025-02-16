@@ -56,6 +56,7 @@ export const model = {
   currentDishEffect() {
     if (!this.currentDishId) {
       this.currentDishPromiseState = { promise: null, data: null, error: null }
+      return;
     }
     const dishPromise = getDishDetails(this.currentDishId)
     resolvePromise(dishPromise, this.currentDishPromiseState)

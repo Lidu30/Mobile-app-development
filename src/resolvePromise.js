@@ -18,5 +18,6 @@ export function resolvePromise(prms, promiseState){
         }
     }
 
-    prms.then(successACB, failureACB);
+    // prms.then(successACB, failureACB); // TODO, what's the difference?
+    prms.then(successACB).catch(failureACB);
 }
