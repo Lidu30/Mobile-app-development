@@ -5,6 +5,10 @@ import { SuspenseView } from "src/views/suspenseView";
 export const Details = observer(function Details(props) {
     const currentDishPromiseState = props.model.currentDishPromiseState;
 
-    return currentDishPromiseState.promise && !currentDishPromiseState.data ?  <SuspenseView/> : <DetailsView/> ;
+    if (currentDishPromiseState.promise && currentDishPromiseState.data) {
+        return <DetailsView/>;
+    }
+
+    return <SuspenseView/>;
 })
   
