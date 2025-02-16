@@ -28,3 +28,5 @@ function currentDishEffectACB() {
 // or you can add a few dishes here, don't forget to remove this in TW2
 // myModel.numberOfGuests = 3
 // myModel.addToMenu(dishesConst[0])
+
+// myModel.currentDishId= 715446
