@@ -5,11 +5,24 @@ import { SuspenseView } from "src/views/suspenseView";
 
 export const Search = observer(function Search(props) {
     const searchResultsPromiseState = props.model.searchResultsPromiseState;
+    const searchText = props.model.searchParams.query; 
+    const searchDishType = props.model.searchParams.type; 
+
 
     return (
         <>
-            <SearchFormView />
-            {searchResultsPromiseState.data && <SearchResultsView /> || <SuspenseView />}
+            <SearchFormView 
+                dishTypeOptions = {["starter", "main course", "dessert"]}
+                text = {searchText}
+                type = {searchDishType}
+            />
+            {searchResultsPromiseState.data && <SearchResultsView
+                                                    searchResults = {searchResultsPromiseState.data}
+                                                /> || <SuspenseView 
+                                                        promise = {searchResultsPromiseState.promise}
+                                                        error = {searchResultsPromiseState.error}
+                                                      />
+            }
         </>
     );
 });
