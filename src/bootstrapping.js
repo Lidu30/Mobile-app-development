@@ -31,4 +31,4 @@ reactiveModel.doSearch({});
 // myModel.numberOfGuests = 3
 // myModel.addToMenu(dishesConst[0])
 
-// myModel.currentDishId= 715446
+myModel.currentDishId= 715446
