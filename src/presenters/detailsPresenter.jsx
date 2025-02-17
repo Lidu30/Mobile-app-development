@@ -7,7 +7,7 @@ export const Details = observer(function Details(props) {
     const isDishInMenu = !!props.model.dishes.find(checkDishInMenu)
 
     function checkDishInMenu(dish){
-        return dish.id ===props.model.currentDishId;
+        return dish.id === props.model.currentDishId;
     }
 
     if (currentDishPromiseState.data) {
@@ -17,6 +17,7 @@ export const Details = observer(function Details(props) {
             isDishInMenu = {isDishInMenu} 
         />;
     }
+    
     return <SuspenseView
         promise ={currentDishPromiseState.promise}
         error = {currentDishPromiseState.error} 

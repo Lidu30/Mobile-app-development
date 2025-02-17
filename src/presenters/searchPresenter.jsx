@@ -8,8 +8,34 @@ export const Search = observer(function Search(props) {
     const searchText = props.model.searchParams.query; 
     const searchDishType = props.model.searchParams.type; 
 
+    function searchData() {
+        if (searchResultsPromiseState.data) {
+            return <SearchResultsView searchResults = {searchResultsPromiseState.data}/>
+        }
+
+        return <SuspenseView 
+                    promise = {searchResultsPromiseState.promise}
+                    error = {searchResultsPromiseState.error}
+                />
+    }
 
     return (
+        <>
+            <SearchFormView 
+                dishTypeOptions = {["starter", "main course", "dessert"]}
+                text = {searchText}
+                type = {searchDishType}
+                onType={console.log}
+                onText={console.log}
+                onSearchDish={console.log}
+            />
+            {searchData()}
+        </>
+    );
+});
+
+/*
+return (
         <>
             <SearchFormView 
                 dishTypeOptions = {["starter", "main course", "dessert"]}
@@ -18,11 +44,12 @@ export const Search = observer(function Search(props) {
             />
             {searchResultsPromiseState.data && <SearchResultsView
                                                     searchResults = {searchResultsPromiseState.data}
-                                                /> || <SuspenseView 
-                                                        promise = {searchResultsPromiseState.promise}
-                                                        error = {searchResultsPromiseState.error}
-                                                      />
+                                               /> || 
+                                               <SuspenseView 
+                                                    promise = {searchResultsPromiseState.promise}
+                                                    error = {searchResultsPromiseState.error}
+                                               />
             }
         </>
     );
-});
+*/
