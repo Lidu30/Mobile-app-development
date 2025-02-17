@@ -1,41 +1,54 @@
+import { FlatList, Pressable, StyleSheet, Text, View} from "react-native"
+import {Image} from "expo-image"
 
-import { observer } from "mobx-react-lite";
-import { SearchFormView } from "src/views/searchFormView";
-import { SearchResultsView } from "src/views/searchResultsView";
-import { SuspenseView } from "src/views/suspenseView";
+export function SearchResultsView(props) {
 
-export const Search = observer(function Search(props) {
-    const searchResultsPromiseState = props.model.searchResultsPromiseState;
-    const searchText = props.model.searchParams.query; 
-    const searchDishType = props.model.searchParams.type; 
 
-    
+  return (
+    <FlatList
+      data={props.searchResults}
+      renderItem={renderSearchResult}
+      keyExtractor={(item) => item.id.toString()}
+      numColumns={2}
+    />
+  )
 
-    function searchData() {
-        if (searchResultsPromiseState.data) {
-            return <SearchResultsView searchResults = {searchResultsPromiseState.data}
-                    dishChosen = {console.log}
-                    />
-        }
+  function renderSearchResult(element) {
+    const dish = element.item
 
-        return <SuspenseView 
-                    promise = {searchResultsPromiseState.promise}
-                    error = {searchResultsPromiseState.error}
-                />
-    }
+    function viewDishACB(){
+      props.dishChosen(dish);
+  }
 
     return (
-        <>
-            <SearchFormView 
-                dishTypeOptions = {["starter", "main course", "dessert"]}
-                text = {searchText}
-                type = {searchDishType}
-                onType={console.log}
-                onText={console.log}
-                onSearchDish={console.log}
-            />
-            {searchData()}
-        </>
-    );
-});
+      <Pressable role="button" style={styles.dishContainer} onPress = {viewDishACB}>
+        <View>
+          <Image style={styles.image} source={{ uri: dish.image }} />
+        </View>
 
+        <View>
+          <Text style={styles.dishName} numberOfLines={3}>
+            {dish.title}
+          </Text>
+        </View>
+      </Pressable>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  dishContainer: {
+    flex: 1,
+    margin: 8,
+  },
+
+  image: {
+    width: "100%",
+    aspectRatio: 1,
+    borderRadius: 8,
+  },
+
+  dishName: {
+    textAlign: "center", // Center-align the dish name
+  },
+})
