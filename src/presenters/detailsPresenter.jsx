@@ -15,6 +15,7 @@ export const Details = observer(function Details(props) {
             dishData = {currentDishPromiseState.data}
             guests = {props.model.numberOfGuests}
             isDishInMenu = {isDishInMenu} 
+            userWantsToAddDish = {console.log}
         />;
     }
     
