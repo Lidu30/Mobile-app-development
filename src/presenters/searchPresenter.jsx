@@ -10,7 +10,9 @@ export const Search = observer(function Search(props) {
 
     function searchData() {
         if (searchResultsPromiseState.data) {
-            return <SearchResultsView searchResults = {searchResultsPromiseState.data}/>
+            return <SearchResultsView searchResults = {searchResultsPromiseState.data}
+            dishChosen = {console.log}
+            />
         }
 
         return <SuspenseView 
