@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from "react-native";
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import { } from "src/DinnerModel"
 
 export function SearchFormView(props) {
     const [text, onChangeTextACB] = React.useState("");
@@ -17,7 +16,8 @@ export function SearchFormView(props) {
     }
 
     function updateValueACB(selectedOption){
-        props.onType(selectedOption)
+        props.onType(selectedOption);
+        props.onSearchDish();
     }
     
     return (
