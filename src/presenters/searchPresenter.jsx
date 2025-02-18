@@ -10,8 +10,9 @@ export const Search = observer(function Search(props) {
 
     function searchData() {
         if (searchResultsPromiseState.data) {
-            return <SearchResultsView searchResults = {searchResultsPromiseState.data}
-            dishChosen = {console.log}
+            return <SearchResultsView 
+                searchResults = {searchResultsPromiseState.data}
+                dishChosen = {chooseDishACB}
             />
         }
 
@@ -21,37 +22,34 @@ export const Search = observer(function Search(props) {
                 />
     }
 
+    function chooseDishACB(dish) {
+        console.log("Dish selected: ", dish);
+        props.model.setCurrentDishId(dish.id);
+    }
+
+    function setSearchTypeACB(newType) {
+        props.model.setSearchType(newType)
+    }
+
+    function setSearchTextACB(newText) {
+        props.model.setSearchQuery(newText);
+    }
+
+    function searchNowACB() {
+        props.model.doSearch(props.model.searchParams);
+    }
+
     return (
         <>
             <SearchFormView 
                 dishTypeOptions = {["starter", "main course", "dessert"]}
                 text = {searchText}
                 type = {searchDishType}
-                onType={console.log}
-                onText={console.log}
-                onSearchDish={console.log}
+                onType={setSearchTypeACB}
+                onText={setSearchTextACB}
+                onSearchDish={searchNowACB}
             />
             {searchData()}
         </>
     );
 });
-
-/*
-return (
-        <>
-            <SearchFormView 
-                dishTypeOptions = {["starter", "main course", "dessert"]}
-                text = {searchText}
-                type = {searchDishType}
-            />
-            {searchResultsPromiseState.data && <SearchResultsView
-                                                    searchResults = {searchResultsPromiseState.data}
-                                               /> || 
-                                               <SuspenseView 
-                                                    promise = {searchResultsPromiseState.promise}
-                                                    error = {searchResultsPromiseState.error}
-                                               />
-            }
-        </>
-    );
-*/

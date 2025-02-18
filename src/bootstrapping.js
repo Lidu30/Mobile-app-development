@@ -12,8 +12,8 @@ configure({ enforceActions: "never" })
 export const reactiveModel = observable(model)
 
 // make the model and a few example dishes available in the browser Console for testing
-global.myModel = reactiveModel
-global.dishesConst = dishesConst
+// global.myModel = reactiveModel
+//global.dishesConst = dishesConst
 
 reaction(currentDishIdACB, currentDishEffectACB)
 
@@ -31,4 +31,4 @@ reactiveModel.doSearch({});
 // myModel.numberOfGuests = 3
 // myModel.addToMenu(dishesConst[0])
 
-myModel.currentDishId= 715446
+// myModel.currentDishId= 715446

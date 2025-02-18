@@ -10,12 +10,16 @@ export const Details = observer(function Details(props) {
         return dish.id === props.model.currentDishId;
     }
 
+    function addDishACB() {
+        props.model.addToMenu(currentDishPromiseState.data)
+    }
+
     if (currentDishPromiseState.data) {
         return <DetailsView
             dishData = {currentDishPromiseState.data}
             guests = {props.model.numberOfGuests}
             isDishInMenu = {isDishInMenu} 
-            userWantsToAddDish = {console.log}
+            userWantsToAddDish = {addDishACB}
         />;
     }
     

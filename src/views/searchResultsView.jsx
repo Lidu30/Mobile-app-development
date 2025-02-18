@@ -1,27 +1,17 @@
-import { FlatList, Pressable, StyleSheet, Text, View} from "react-native"
-import {Image} from "expo-image"
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native"
+import { Image } from "expo-image"
 
 export function SearchResultsView(props) {
-
-
-  return (
-    <FlatList
-      data={props.searchResults}
-      renderItem={renderSearchResult}
-      keyExtractor={(item) => item.id.toString()}
-      numColumns={2}
-    />
-  )
 
   function renderSearchResult(element) {
     const dish = element.item
 
     function viewDishACB(){
       props.dishChosen(dish);
-  }
+    }
 
     return (
-      <Pressable role="button" style={styles.dishContainer} onPress = {viewDishACB}>
+      <Pressable role="button" style={styles.dishContainer} onPress={viewDishACB}>
         <View>
           <Image style={styles.image} source={{ uri: dish.image }} />
         </View>
@@ -34,6 +24,15 @@ export function SearchResultsView(props) {
       </Pressable>
     )
   }
+
+  return (
+    <FlatList
+      data={props.searchResults}
+      renderItem={renderSearchResult}
+      keyExtractor={(item) => item.id.toString()}
+      numColumns={2}
+    />
+  )
 }
 
 const styles = StyleSheet.create({
