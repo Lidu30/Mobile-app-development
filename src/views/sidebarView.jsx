@@ -47,7 +47,7 @@ export function SidebarView(props){
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
+      <View style={styles.guestRow}>
         <Button title="-" disabled={props.number === 1} onPress={removePersonACB}></Button>
         <Text style={styles.text}>{props.number} {props.number === 1 ? "Guest" : "Guests"}</Text>
         <Button title="+" onPress={addPersonACB}></Button>
@@ -75,6 +75,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
     padding: 8,
+    margin: 8,
+  },
+  guestRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    alignItems: "center",
+    padding: 8,
+    margin: 8,
   },
   dishRow: {
     flexDirection: "row",
@@ -87,6 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius:8,
     marginVertical: 8,
+    margin: 8,
   },
   dishName: {
     fontSize: 17,

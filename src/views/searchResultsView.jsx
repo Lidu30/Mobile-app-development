@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 1,
     borderRadius: 8,
+    margin: 4,
   },
 
   dishName: {

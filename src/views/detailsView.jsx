@@ -10,7 +10,8 @@ export function DetailsView(props) {
     }
 
     function addDishToMenuACB(){
-        props.userWantsToAddDish()
+        console.log(props.dishData);
+        props.userWantsToAddDish();
     }
 
     function renderIngredientCB(element) {
@@ -30,8 +31,9 @@ export function DetailsView(props) {
 
         <Image source={{ uri: props.dishData.image }} style={styles.image} />
 
-        <View style={"/* TODO */"}>
+        <View style={styles.buttonRow}>
             <Pressable 
+                style={styles.button}
                 role="button"
                 disabled={props.isDishInMenu} 
                 onPress={addDishToMenuACB}
@@ -40,13 +42,18 @@ export function DetailsView(props) {
             </Pressable>
 
             <Pressable 
+                style={styles.button}
                 role="button" 
                 onPress={openMoreInfoACB}
             >
                 <Text>More info</Text>
             </Pressable>
 
-            <Pressable onPress={"/* TODO */"}>
+            <Pressable 
+                style={styles.button}
+                role="button"
+                onPress={console.log}
+            >
                 <Text>Cancel</Text>
             </Pressable>
         </View>
@@ -57,9 +64,8 @@ export function DetailsView(props) {
             <Text>Total for {props.guests} guests: {(props.dishData.pricePerServing * props.guests).toFixed(2)}</Text>
         </View>
 
-        <View>
+        <View style={styles.card}>
             <Text style={styles.header}>Ingredients</Text>
-            {"/*TODO: flatlist? */"}
             <FlatList 
                 data={props.dishData.extendedIngredients}
                 renderItem={renderIngredientCB}
@@ -67,7 +73,7 @@ export function DetailsView(props) {
             />
         </View>
 
-        <View>
+        <View style={styles.card}>
             <Text style={styles.header}>Instructions</Text>
             <FlatList 
                 data={props.dishData.analyzedInstructions[0].steps}
@@ -83,7 +89,7 @@ const styles = StyleSheet.create({
     input: {
       backgroundColor: "white",
       borderRadius: 8,
-      margin: 12,
+      margin: 8,
       padding: 8,
     },
     dishTypes: {
@@ -93,6 +99,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "bold",
+        margin: 8,
     },
     header: {
         fontSize: 15,
@@ -103,5 +110,23 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         borderRadius:8,
         marginVertical: 8,
+        margin: 8,
+    },
+    buttonRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    button: {
+        backgroundColor: "grey",
+        borderRadius: 8,
+        margin: 8,
+        padding: 8,
+        flex: 1,
+        alignItems: "center"
+    },
+    image: {
+        aspectRatio: 3,
+        borderRadius: 8,
+        margin: 8,
     },
   });
