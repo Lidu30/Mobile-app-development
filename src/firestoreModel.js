@@ -1,4 +1,3 @@
-// initialize Firebase app
 import { initializeApp } from "firebase/app";
 import {firebaseConfig} from "src/firebaseConfig.js";
 const app= initializeApp(firebaseConfig);
@@ -15,9 +14,23 @@ global.db= db
 /* Replace NN with your TW2_TW3 group number! */
 const COLLECTION="dinnerModel11";
 
-// TODO: read the code above
-// TODO: export the function connectToPersistence, it can be empty for starters
+export function connectToPersistence(reactiveModel, reaction) {
+    
+    function getModelStateACB() {
+        return {
+            numberOfGuests: reactiveModel.numberOfGuests,
+            dishes: reactiveModel.dishes,
+            currentDish: reactiveModel.currentDish,
+        };
+    }
 
-export function connectToPersistence() {
+    function persistenceModelACB(modelState){
+        const refObject = doc(db,COLLECTION, "modelData");
+        setDoc(refObject, modelState, {merge:true});
+    }
+
+    reaction(getModelStateACB, persistenceModelACB);
     
 }
+
+
