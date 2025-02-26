@@ -35,9 +35,4 @@ reactiveModel.doSearch({});
 
 // myModel.currentDishId= 715446
 
-//const firestoreDoc= doc(db, "test collection", "test document")
-//setDoc(firestoreDoc, {dummyField: "dummyValue"}, {merge:true})
-//.then(() => console.log("Dummy document successfully written!"))
-//.catch(error => console.error("Error writing document: ", error));
-
-connectToPersistence();
+connectToPersistence(reactiveModel, reaction); 

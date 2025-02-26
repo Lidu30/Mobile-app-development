@@ -8,7 +8,7 @@ export function resolvePromise(prms, promiseState){
     }
 
     function successACB(result){
-        if(promiseState.promise ===prms){
+        if(promiseState.promise===prms){
             promiseState.data=result;
             //promiseState.loading=false;
         }
