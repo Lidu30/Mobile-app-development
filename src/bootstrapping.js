@@ -5,6 +5,8 @@ import { configure, observable, reaction } from "mobx"
 import { model } from "./DinnerModel"
 import { dishesConst } from "./dishesConst"
 
+import { connectToPersistence } from "./firestoreModel"
+
 //——————————————————————————————————————————————————————————————————————————————
 
 configure({ enforceActions: "never" })
@@ -32,3 +34,10 @@ reactiveModel.doSearch({});
 // myModel.addToMenu(dishesConst[0])
 
 // myModel.currentDishId= 715446
+
+//const firestoreDoc= doc(db, "test collection", "test document")
+//setDoc(firestoreDoc, {dummyField: "dummyValue"}, {merge:true})
+//.then(() => console.log("Dummy document successfully written!"))
+//.catch(error => console.error("Error writing document: ", error));
+
+connectToPersistence();

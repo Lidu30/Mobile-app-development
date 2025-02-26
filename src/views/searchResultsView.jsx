@@ -25,13 +25,15 @@ export function SearchResultsView(props) {
     )
   }
 
-  return (
-    <FlatList
-      data={props.searchResults}
-      renderItem={renderSearchResult}
-      keyExtractor={(item) => item.id.toString()}
-      numColumns={2}
-    />
+  return ( 
+    <View>
+      <FlatList
+        data={props.searchResults}
+        renderItem={renderSearchResult}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+      />
+    </View>
   )
 }
 

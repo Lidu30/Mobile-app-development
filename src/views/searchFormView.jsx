@@ -33,12 +33,12 @@ export function SearchFormView(props) {
         </View>
         
         <View>
-        <SegmentedControl
-            style={styles.dishTypes}
-            values={['All', ...props.dishTypeOptions]}
-            selectedIndex={selectedIndex}
-            onValueChange={updateValueACB}
-        />
+            <SegmentedControl
+                style={styles.dishTypes}
+                values={['All', ...props.dishTypeOptions]}
+                selectedIndex={selectedIndex}
+                onValueChange={updateValueACB}
+            />
         </View>
     </View>);
 }

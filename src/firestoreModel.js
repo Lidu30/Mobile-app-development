@@ -17,3 +17,7 @@ const COLLECTION="dinnerModel11";
 
 // TODO: read the code above
 // TODO: export the function connectToPersistence, it can be empty for starters
+
+export function connectToPersistence() {
+    
+}

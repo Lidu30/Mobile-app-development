@@ -27,9 +27,11 @@ export function DetailsView(props) {
     }
 
     return (<ScrollView>
-        <Text style={styles.title}>{props.dishData.title}</Text>
 
-        <Image source={{ uri: props.dishData.image }} style={styles.image} />
+        <View>
+            <Text style={styles.title}>{props.dishData.title}</Text>
+            <Image source={{ uri: props.dishData.image }} style={styles.image}/>
+        </View>
 
         <View style={styles.buttonRow}>
             <Pressable 
@@ -125,6 +127,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     image: {
+        width: "96%",
         aspectRatio: 3,
         borderRadius: 8,
         margin: 8,
