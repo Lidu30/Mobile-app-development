@@ -8,15 +8,15 @@ import { Summary } from "src/presenters/summaryPresenter"
 
 export default observer(function IndexPage() {
   return (
-    <ScrollView>
-      <View>
+    /*<ScrollView>
+      <View>*/
         <Sidebar model = {reactiveModel} />
-      </View>
+      /*</View>
       <View>
         <Search model = {reactiveModel} />
         <Details model = {reactiveModel} />
         <Summary model = {reactiveModel} />
       </View>
-    </ScrollView>
+    </ScrollView>*/
   )
 })
