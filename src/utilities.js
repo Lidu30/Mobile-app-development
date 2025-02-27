@@ -1,3 +1,5 @@
+import {Platform} from "react-native"
+
 /* uncomment the export below to enable the 1.1.2 test suite! */
 export function compareIngredientsCB(ingredientA, ingredientB){
   if (ingredientA.aisle < ingredientB.aisle) {
@@ -108,4 +110,34 @@ export function shoppingList(dishes){
 
   // now we transform the result object into an array: we drop the keys and only keep the values
   return Object.values(result);
+}
+
+export function getCardStyle() {
+  if (Platform.OS === "ios") {
+    return {
+      borderWidth: 1,
+      borderColor: "#ccc", // Subtle border color
+      borderRadius: 8,
+      padding: 10,
+      backgroundColor: "white",
+    };
+  } 
+  else if (Platform.OS === "android") {
+    return {
+      elevation: 5, // elevation shadow for Android
+      borderRadius: 8,
+      padding: 10,
+      backgroundColor: "white",
+    };
+  }
+
+  return {
+    borderWidth: 1,
+    borderColor: "#888", 
+    borderRadius: 8,
+    padding: 10,
+    backgroundColor: "white",
+    boxShadow: "0px 4px 6px rgba(0,0,0,0.1)", // Web shadow
+  };
+  
 }

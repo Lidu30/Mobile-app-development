@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 // un-comment when needed:
-import {sortIngredients} from "src/utilities";
+import { sortIngredients, getCardStyle } from "src/utilities";
 
 /* Functional JSX component. Name must start with capital letter */
 export function SummaryView(props) {
@@ -51,6 +51,7 @@ export function SummaryView(props) {
 // Basic styles to get started
 const styles = StyleSheet.create({
   container: {
+    ...getCardStyle(),
     padding: 16,
     flex: 1,
   },

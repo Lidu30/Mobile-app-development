@@ -1,5 +1,6 @@
 import { ScrollView, View, Text, StyleSheet, Pressable, Linking, FlatList } from "react-native";
 import { Image } from "expo-image"
+import { getCardStyle } from "src/utilities";
 
 export function DetailsView(props) {
 
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     card: {
+        ...getCardStyle(),
         padding: 10,
         backgroundColor: "#ffffff",
         borderRadius:8,

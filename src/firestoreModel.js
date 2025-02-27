@@ -16,49 +16,51 @@ global.db = db
 const COLLECTION = "dinnerModel11"
 
 export function connectToPersistence(model, watchFunction) {
-  function getModelStateACB() {
-    return [model.numberOfGuests, model.dishes, model.currentDishId]
-  }
-  const refObject = doc(db, COLLECTION, "modelData");
-  function persistenceModelACB() {
-    const refObject = doc(db, COLLECTION, "modelData")
-    if (model.ready) {
-      setDoc(
-        refObject,
-        {
-          numberOfGuests: model.numberOfGuests,
-          dishes: model.dishes,
-          currentDishId: model.currentDishId,
-        },
-        { merge: true },
-      )
+    function getModelStateACB() {
+        return [model.numberOfGuests, model.dishes, model.currentDishId]
     }
-  }
-
-  //Why does thr section below needs to be only just before or after installing the side effect
 
     
-
-  function errorACB(error) {
-    console.error(
-      "Could not reach cloud Firestore backend. Connection failed 1 times:", error)
-  } 
-
-  function readyACB(docSnap) {
-    const data = docSnap.data();
-    if (data) {
-      model.numberOfGuests = data.numberOfGuests || 2;
-      model.dishes = data.dishes || [];
-      model.currentDishId = data.currentDishId || null;
-    } else {
-        model.numberOfGuests = 2;
-        model.dishes = [];
-        model.currentDishId = null;
+    function persistenceModelACB() {
+        const refObject = doc(db, COLLECTION, "modelData")
+        if (model.ready) {
+            setDoc(
+                refObject,
+                {
+                numberOfGuests: model.numberOfGuests,
+                dishes: model.dishes,
+                currentDishId: model.currentDishId,
+                },
+                { merge: true },
+            )
+        }
     }
-    model.ready = true;   
-  }
 
-  watchFunction(getModelStateACB, persistenceModelACB);
-  model.ready = false
-  getDoc(refObject).then((docSnap) => {console.log("Fetched the object: ", docSnap); readyACB(docSnap)}).catch(errorACB);
+    // Why does the section below needs to be only just before or after installing the side effect
+
+    function errorACB(error) {
+        console.error(
+            "Could not reach cloud Firestore backend. Connection failed 1 times:", error)
+    } 
+
+    function readyACB(docSnap) {
+        const data = docSnap.data();
+        if (data) {
+            model.numberOfGuests = data.numberOfGuests || 2;
+            model.dishes = data.dishes || [];
+            model.currentDishId = data.currentDishId || null;
+        } else {
+            model.numberOfGuests = 2;
+            model.dishes = [];
+            model.currentDishId = null;
+        }
+        model.ready = true;   
+    }
+
+    watchFunction(getModelStateACB, persistenceModelACB);
+
+    model.ready = false
+
+    const refObject = doc(db, COLLECTION, "modelData");
+    getDoc(refObject).then(readyACB).catch(errorACB);
 }

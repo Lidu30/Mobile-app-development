@@ -1,5 +1,5 @@
 import {Button, FlatList, Pressable, StyleSheet, Text, View} from "react-native";
-import {sortDishes, dishType, menuPrice} from "src/utilities";
+import {sortDishes, dishType, menuPrice, getCardStyle } from "src/utilities";
 
 export function SidebarView(props){
   function removePersonACB() {
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   card: {
+    ...getCardStyle(),
     padding: 10,
     backgroundColor: "#ffffff",
     borderRadius:8,

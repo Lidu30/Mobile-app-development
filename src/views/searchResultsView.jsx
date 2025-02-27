@@ -1,5 +1,6 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native"
 import { Image } from "expo-image"
+import { getCardStyle } from "src/utilities";
 
 export function SearchResultsView(props) {
 
@@ -39,6 +40,7 @@ export function SearchResultsView(props) {
 
 const styles = StyleSheet.create({
   dishContainer: {
+    ...getCardStyle(),
     flex: 1,
     margin: 8,
   },
