@@ -19,11 +19,11 @@ export function connectToPersistence(model, watchFunction) {
   function getModelStateACB() {
     return [model.numberOfGuests, model.dishes, model.currentDishId]
   }
-
+  const refObject = doc(db, COLLECTION, "modelData");
   function persistenceModelACB() {
     const refObject = doc(db, COLLECTION, "modelData")
     if (model.ready) {
-        setDoc(
+      setDoc(
         refObject,
         {
           numberOfGuests: model.numberOfGuests,
@@ -35,6 +35,30 @@ export function connectToPersistence(model, watchFunction) {
     }
   }
 
+  //Why does thr section below needs to be only just before or after installing the side effect
 
-  watchFunction(getModelStateACB, persistenceModelACB)
+    
+
+  function errorACB(error) {
+    console.error(
+      "Could not reach cloud Firestore backend. Connection failed 1 times:", error)
+  } 
+
+  function readyACB(docSnap) {
+    const data = docSnap.data();
+    if (data) {
+      model.numberOfGuests = data.numberOfGuests || 2;
+      model.dishes = data.dishes || [];
+      model.currentDishId = data.currentDishId || null;
+    } else {
+        model.numberOfGuests = 2;
+        model.dishes = [];
+        model.currentDishId = null;
+    }
+    model.ready = true;   
+  }
+
+  watchFunction(getModelStateACB, persistenceModelACB);
+  model.ready = false
+  getDoc(refObject).then((docSnap) => {console.log("Fetched the object: ", docSnap); readyACB(docSnap)}).catch(errorACB);
 }
