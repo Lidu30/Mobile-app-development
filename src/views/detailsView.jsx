@@ -15,16 +15,20 @@ export function DetailsView(props) {
         props.userWantsToAddDish();
     }
 
-    function renderIngredientCB(element) {
-        const ingr= element.item;
-            return (
-                <Text>{ingr.amount.toFixed(2)} {ingr.unit} {ingr.name}</Text>
-            );
+    function displayIngredientsCB(ingr) {
+        return (
+            <Text key={ingr.id}>
+                {ingr.amount.toFixed(2)} {ingr.unit} {ingr.name}
+            </Text>
+        )
     }
-
-    function renderInstructionsCB(element) {
-        const instr = element.item;
-        return <Text>{instr.number}. {instr.step}</Text>
+    
+    function displayInstructionsCB(instr) {
+        return (
+            <Text key={instr.number}>
+                {instr.number}. {instr.step}
+            </Text>
+        )
     }
 
     return (<ScrollView>
@@ -69,20 +73,16 @@ export function DetailsView(props) {
 
         <View style={styles.card}>
             <Text style={styles.header}>Ingredients</Text>
-            <FlatList 
-                data={props.dishData.extendedIngredients}
-                renderItem={renderIngredientCB}
-                keyExtractor={item => item.id}
-            />
+            <View>
+                {props.dishData.extendedIngredients.map(displayIngredientsCB)}
+            </View>
         </View>
 
         <View style={styles.card}>
             <Text style={styles.header}>Instructions</Text>
-            <FlatList 
-                data={props.dishData.analyzedInstructions[0].steps}
-                renderItem={renderInstructionsCB}
-                keyExtractor={item => item.id}
-            />
+            <View>
+                {props.dishData.analyzedInstructions[0].steps.map(displayInstructionsCB)}
+            </View>
         </View>
 
     </ScrollView>);

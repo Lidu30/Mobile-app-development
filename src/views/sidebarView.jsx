@@ -3,12 +3,12 @@ import {sortDishes, dishType, menuPrice, getCardStyle } from "src/utilities";
 
 export function SidebarView(props){
   function removePersonACB() {
-    console.log("Remove person");
+    //console.log("Remove person");
     props.onNumberChange(props.number - 1)
   };
 
   function addPersonACB() {
-    console.log("Add person");
+    //console.log("Add person");
     props.onNumberChange(props.number + 1)
   };
   
@@ -16,12 +16,12 @@ export function SidebarView(props){
     const dish = element.item
     
       function displayDishACB() {
-        console.log(dish);
+        // console.log(dish);
         props.onDishInterest(dish)
       }
     
       function removeDishACB() {
-        console.log("Remove selected dish");
+        //console.log("Remove selected dish");
         props.onDishRemove(dish)
       }
 
@@ -56,7 +56,8 @@ export function SidebarView(props){
       <FlatList
         data={sortDishes(props.dishes)}
         renderItem={renderItemCB}
-        keyExtractor={item => item.id}/> {/* TODO: might be the wrong id, pressing on x of one dish removes all dishes of that same type*/}
+        keyExtractor={item => item.id} 
+      /> 
       
       <View style={styles.dishRow}>
         <Text>Total: </Text>

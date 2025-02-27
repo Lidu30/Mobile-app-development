@@ -51,7 +51,6 @@ export function SummaryView(props) {
 // Basic styles to get started
 const styles = StyleSheet.create({
   container: {
-    ...getCardStyle(),
     padding: 16,
     flex: 1,
   },
