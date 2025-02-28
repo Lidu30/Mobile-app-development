@@ -16,30 +16,30 @@ export function SidebarView(props){
   function renderItemCB(element) {
     const dish = element.item
     
-      function displayDishACB() {
-        // console.log(dish);
-        props.onDishInterest(dish)
-        router.push('/details')
-      }
-    
-      function removeDishACB() {
-        //console.log("Remove selected dish");
-        props.onDishRemove(dish)
-      }
+    function displayDishACB() {
+      // console.log(dish);
+      props.onDishInterest(dish)
+      router.push('/details')
+    }
+  
+    function removeDishACB() {
+      //console.log("Remove selected dish");
+      props.onDishRemove(dish)
+    }
 
     return (
       <Pressable onPress={displayDishACB} testID="sidebar-row" style={styles.card}>
         <View style={styles.dishRow}>
-          <View>
-            <Text style={styles.dishName}>{dish.title}</Text>
-            <Text>{dishType(dish)}</Text>
+          <View style={styles.dishNameContainer}>
+            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.dishName}>{dish.title}</Text>
+            <Text numberOfLines={1} ellipsizeMode="tail">{dishType(dish)}</Text>
           </View>
           <View style={styles.priceContainer}>
             <View>
               <Text style={styles.dishPrice}>${(dish.pricePerServing * props.number /100).toFixed(2)}</Text>
             </View>
-            <Pressable onPress={removeDishACB} testID="sidebar-row-remove" style={styles.x}>
-              <Text>x</Text>
+            <Pressable onPress={removeDishACB} testID="sidebar-row-remove">
+              <Text style={styles.x}>✕</Text>
             </Pressable>
           </View>
         </View>
@@ -48,7 +48,7 @@ export function SidebarView(props){
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.guestRow}>
         <Button title="-" disabled={props.number === 1} onPress={removePersonACB}></Button>
         <Text style={styles.text}>{props.number} {props.number === 1 ? "Guest" : "Guests"}</Text>
@@ -67,8 +67,6 @@ export function SidebarView(props){
       </View>     
     </View>
   );
-
-  
 }
 
 // Basic style
@@ -101,6 +99,10 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     margin: 8,
   },
+  dishNameContainer: {
+    flex: 1,
+    marginRight: 8, 
+  },
   dishName: {
     fontSize: 17,
     fontWeight: "bold",
@@ -108,17 +110,20 @@ const styles = StyleSheet.create({
   dishPrice: {
     fontSize: 20,
     fontWeight: "bold",
-    marginRight: 10,
+    marginRight: 15,
   },
   priceContainer: {
     flexDirection: "row",
     alignItems: "flex-end",
-    
+    flexShrink: 0,
+    marginLeft: 8,
   },
   text: {
     marginHorizontal: 16,
   },
   x: {
     fontWeight: "bold",
+    fontSize: 20,
+    color: "red",
   },
 });

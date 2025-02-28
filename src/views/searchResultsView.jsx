@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 8,
     margin: 4,
+    alignSelf: "center"
   },
 
   dishName: {

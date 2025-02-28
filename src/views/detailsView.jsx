@@ -1,5 +1,4 @@
 import {
-  FlatList,
   Linking,
   Pressable,
   ScrollView,
@@ -22,6 +21,10 @@ export function DetailsView(props) {
     console.log(props.dishData)
     props.userWantsToAddDish()
     router.push("/")
+  }
+
+  function cancelACB() {
+    router.push("/search")
   }
 
   function displayIngredientsCB(ingr) {
@@ -65,7 +68,7 @@ export function DetailsView(props) {
           <Text>More info</Text>
         </Pressable>
 
-        <Pressable style={styles.button} role="button" onPress={console.log}>
+        <Pressable style={styles.button} role="button" onPress={cancelACB}>
           <Text>Cancel</Text>
         </Pressable>
       </View>
