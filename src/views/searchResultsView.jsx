@@ -1,6 +1,7 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native"
 import { Image } from "expo-image"
 import { getCardStyle } from "src/utilities";
+import {router} from "expo-router"
 
 export function SearchResultsView(props) {
 
@@ -9,6 +10,7 @@ export function SearchResultsView(props) {
 
     function viewDishACB(){
       props.dishChosen(dish);
+      router.push('/details')
     }
 
     return (

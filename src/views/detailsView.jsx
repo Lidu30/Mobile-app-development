@@ -1,6 +1,7 @@
 import { ScrollView, View, Text, StyleSheet, Pressable, Linking, FlatList } from "react-native";
 import { Image } from "expo-image"
 import { getCardStyle } from "src/utilities";
+import {router} from "expo-router"
 
 export function DetailsView(props) {
 
@@ -13,6 +14,7 @@ export function DetailsView(props) {
     function addDishToMenuACB(){
         console.log(props.dishData);
         props.userWantsToAddDish();
+        router.push('/');
     }
 
     function displayIngredientsCB(ingr) {

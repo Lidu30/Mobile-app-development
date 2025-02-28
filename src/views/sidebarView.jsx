@@ -1,5 +1,6 @@
 import {Button, FlatList, Pressable, StyleSheet, Text, View} from "react-native";
 import {sortDishes, dishType, menuPrice, getCardStyle } from "src/utilities";
+import {router} from "expo-router"
 
 export function SidebarView(props){
   function removePersonACB() {
@@ -18,6 +19,7 @@ export function SidebarView(props){
       function displayDishACB() {
         // console.log(dish);
         props.onDishInterest(dish)
+        router.push('/details')
       }
     
       function removeDishACB() {
