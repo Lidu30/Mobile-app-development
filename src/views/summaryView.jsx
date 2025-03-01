@@ -1,6 +1,6 @@
-import { FlatList, StyleSheet, Text, View, ScrollView } from "react-native";
+import { FlatList, StyleSheet, Text, View, ScrollView } from "react-native"
 // un-comment when needed:
-import { sortIngredients, getCardStyle } from "src/utilities";
+import { getCardStyle, sortIngredients } from "src/utilities"
 
 /* Functional JSX component. Name must start with capital letter */
 export function SummaryView(props) {
@@ -12,27 +12,31 @@ export function SummaryView(props) {
       </Text>
 
       {/* testID="summary-row" */}
-      <View style={styles.card}>
-        {/*
-        <View  style={styles.row}>
-          <Text>Name</Text>
-          <Text>Aisle</Text>
-          <Text>Quantity</Text>
+      <ScrollView style = {{flex: 1}}> 
+        <View style={styles.card}>
+          {/*
+          <View  style={styles.row}>
+            <Text>Name</Text>
+            <Text>Aisle</Text>
+            <Text>Quantity</Text>
+          </View>
+          */}
+
+          <FlatList
+            data={sortIngredients(props.ingredients)}
+            renderItem={renderIngredientRowCB}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ flexGrow: 1 }}  
+            style={{ flex: 1 }}
+          />
         </View>
-        */}
-        
-        <FlatList 
-          data={sortIngredients(props.ingredients)}
-          renderItem={renderIngredientRowCB}
-          keyExtractor={item => item.id}
-        />
-      </View>
+      </ScrollView> 
     </View>
-  );
+  )
 
   /* Callback for rendering each ingredient row - implement in TW 1.3 */
   function renderIngredientRowCB(element) {
-    const ingr= element.item;    // FlatList sends objects with a property called item
+    const ingr = element.item // FlatList sends objects with a property called item
     return (
       <View testID="summary-row" style={styles.row}>
         <View>
@@ -40,32 +44,34 @@ export function SummaryView(props) {
           <Text>{ingr.aisle}</Text>
         </View>
         <View>
-          <Text style={styles.ingredientAmount}>{(props.people * ingr.amount).toFixed(2)} {ingr.unit}</Text>
+          <Text style={styles.ingredientAmount}>
+            {(props.people * ingr.amount).toFixed(2)} {ingr.unit}
+          </Text>
         </View>
       </View>
-    );
+    )
   }
 }
-
 
 // Basic styles to get started
 const styles = StyleSheet.create({
   container: {
     padding: 16,
     flex: 1,
+    flexGrow: 1,
   },
   row: {
     flexDirection: "row",
     padding: 8,
     justifyContent: "space-between",
   },
-  ingredient:{
+  ingredient: {
     fontSize: 17,
     fontWeight: "bold",
   },
-  ingredientAmount:{
+  ingredientAmount: {
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "right",
   },
-});
+})
