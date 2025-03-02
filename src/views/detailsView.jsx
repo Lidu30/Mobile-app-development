@@ -52,7 +52,7 @@ export function DetailsView(props) {
 
       <View style={styles.buttonRow}>
         <Pressable
-          style={styles.button}
+          style={props.isDishInMenu ? styles.disabledButton : styles.button}
           role="button"
           disabled={props.isDishInMenu}
           onPress={addDishToMenuACB}
@@ -68,8 +68,8 @@ export function DetailsView(props) {
           <Text>More info</Text>
         </Pressable>
 
-        <Pressable style={styles.button} role="button" onPress={cancelACB}>
-          <Text>Cancel</Text>
+        <Pressable style={styles.cancelButton} role="button" onPress={cancelACB}>
+          <Text style={styles.whiteText}>Cancel</Text>
         </Pressable>
       </View>
 
@@ -95,7 +95,7 @@ export function DetailsView(props) {
         <Text style={styles.header}>Instructions</Text>
         <View>
           {props.dishData.analyzedInstructions?.[0]?.steps.map(
-            displayInstructionsCB,
+            displayInstructionsCB
           )}
         </View>
       </View>
@@ -136,7 +136,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    backgroundColor: "grey",
+    backgroundColor: "#cccccc",
+    borderRadius: 8,
+    margin: 8,
+    padding: 8,
+    flex: 1,
+    alignItems: "center",
+  },
+  disabledButton: {
+    borderWidth: 2,  
+    borderColor: "white",
+    borderRadius: 8,
+    margin: 8,
+    padding: 8,
+    flex: 1,
+    alignItems: "center",
+  },
+  cancelButton: {
+    backgroundColor: "#cc0000",
     borderRadius: 8,
     margin: 8,
     padding: 8,
@@ -148,5 +165,8 @@ const styles = StyleSheet.create({
     aspectRatio: 3,
     borderRadius: 8,
     margin: 8,
+  },
+  whiteText: {
+    color: "white",
   },
 })
