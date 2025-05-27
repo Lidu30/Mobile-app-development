@@ -5,6 +5,7 @@ import { firebaseConfig } from "src/firebaseConfig.js"
 
 const app = initializeApp(firebaseConfig)
 
+//db is the firestore database instance
 const db = getFirestore(app)
 
 // make doc and setDoc available at the Console for testing
@@ -22,6 +23,7 @@ export function connectToPersistence(model, watchFunction) {
 
     
     function persistenceModelACB() {
+        //creates a refrence to a specific document on the Firestore database
         const refObject = doc(db, COLLECTION, "modelData")
         if (model.ready) {
             setDoc(
@@ -38,6 +40,7 @@ export function connectToPersistence(model, watchFunction) {
 
     // Why does the section below needs to be only just before or after installing the side effect
 
+        //check the getDoc() promise error
     function errorACB(error) {
         console.error(
             "Could not reach cloud Firestore backend. Connection failed 1 times:", error)
