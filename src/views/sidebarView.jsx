@@ -11,12 +11,12 @@ export function SidebarView(props){
   function removePersonACB() {
     //console.log("Remove person");
     props.onNumberChange(props.number - 1)
-  };
+  }
 
   function addPersonACB() {
     //console.log("Add person");
     props.onNumberChange(props.number + 1)
-  };
+  }
   
   function renderItemCB(element) {
     const dish = element.item
@@ -47,9 +47,6 @@ export function SidebarView(props){
               <Text style={styles.x}>✕</Text>
             </Pressable>
           </View>
-          <View style={styles.signOutContainer}>
-            <Button title="Sign Out" onPress={signOutACB} color="red"/>
-          </View>
         </View>
       </Pressable>
     );
@@ -57,10 +54,16 @@ export function SidebarView(props){
 
   return (
     <View>
-      <View style={styles.guestRow}>
-        <Button title="-" disabled={props.number === 1} onPress={removePersonACB}></Button>
-        <Text style={styles.text}>{props.number} {props.number === 1 ? "Guest" : "Guests"}</Text>
-        <Button title="+" onPress={addPersonACB}></Button>
+      <View style={styles.header}>
+        <View style={styles.guestRow}>
+          <Button title="-" disabled={props.number === 1} onPress={removePersonACB}></Button>
+          <Text style={styles.text}>{props.number} {props.number === 1 ? "Guest" : "Guests"}</Text>
+          <Button title="+" onPress={addPersonACB}></Button>
+        </View>
+
+        <View style={styles.signOutContainer}>
+            <Button title="Sign Out" onPress={signOutACB} color=""/>
+        </View>
       </View>
 
       <FlatList
@@ -85,6 +88,15 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     padding: 8,
     margin: 8,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 8,
+    backgroundColor: "#f8f9fa",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e9ecef",
   },
   guestRow: {
     flexDirection: "row",

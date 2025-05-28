@@ -9,7 +9,6 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 export const auth = getAuth(app)
 
-
 // make doc and setDoc available at the Console for testing
 global.doc = doc
 global.setDoc = setDoc
@@ -23,12 +22,12 @@ export function connectToPersistence(model, watchFunction) {
         return [model.numberOfGuests, model.dishes, model.currentDishId]
     }
 
-    
     function persistenceModelACB() {
         //creates a refrence to a specific document on the Firestore database
         if (!model.ready || !model.user) return;
 
-        const refObject = doc(db, COLLECTION, "modelData")
+        // FIX: Use user.uid instead of "modelData"
+        const refObject = doc(db, COLLECTION, model.user.uid)
         setDoc(
             refObject,
             {
@@ -38,7 +37,6 @@ export function connectToPersistence(model, watchFunction) {
             },
             { merge: true },
         )
-        
     }
 
     // Why does the section below needs to be only just before or after installing the side effect
@@ -80,10 +78,8 @@ export function connectToPersistence(model, watchFunction) {
         model.user = user;
         
         if (user) {
-            
             readFromPersistenceACB();
         } else {
-            
             model.numberOfGuests = 2;
             model.dishes = [];
             model.currentDishId = null;
