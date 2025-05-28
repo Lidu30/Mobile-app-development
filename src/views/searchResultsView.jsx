@@ -1,20 +1,30 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native"
+import {
+  FlatList,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native"
 import { Image } from "expo-image"
-import { getCardStyle } from "src/utilities";
-import {router} from "expo-router"
+import { router } from "expo-router"
+import { getCardStyle } from "src/utilities"
 
 export function SearchResultsView(props) {
-
   function renderSearchResult(element) {
     const dish = element.item
 
-    function viewDishACB(){
-      props.dishChosen(dish);
-      router.push('/details')
+    function viewDishACB() {
+      props.dishChosen(dish)
+      router.push("/details")
     }
 
     return (
-      <Pressable role="button" style={styles.dishContainer} onPress={viewDishACB}>
+      <Pressable
+        role="button"
+        style={styles.dishContainer}
+        onPress={viewDishACB}
+      >
         <View>
           <Image style={styles.image} source={{ uri: dish.image }} />
         </View>
@@ -28,8 +38,8 @@ export function SearchResultsView(props) {
     )
   }
 
-  return ( 
-    <View>
+  return (
+    <View style={{ flex: 1 }}>
       <FlatList
         data={props.searchResults}
         renderItem={renderSearchResult}
@@ -52,10 +62,11 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 8,
     margin: 4,
-    alignSelf: "center"
+    alignSelf: "center",
   },
 
   dishName: {
     textAlign: "center", // Center-align the dish name
   },
 })
+

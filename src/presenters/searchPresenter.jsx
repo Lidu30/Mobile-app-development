@@ -2,6 +2,8 @@ import { observer } from "mobx-react-lite";
 import { SearchFormView } from "src/views/searchFormView";
 import { SearchResultsView } from "src/views/searchResultsView";
 import { SuspenseView } from "src/views/suspenseView";
+import { debounce, throttle } from 'lodash';
+import { useMemo } from 'react';
 
 export const Search = observer(function Search(props) {
     const searchResultsPromiseState = props.model.searchResultsPromiseState;
@@ -35,9 +37,18 @@ export const Search = observer(function Search(props) {
         props.model.setSearchQuery(newText);
     }
 
+    function setDebouncedSearchTextACB(newText) {
+        props.model.setSearchQuery(newText);
+        throttledSearch();
+    }
+
+    const debouncedTextInput = debounce(setDebouncedSearchTextACB, 250);
+
     function searchNowACB() {
         props.model.doSearch(props.model.searchParams);
     }
+
+    const throttledSearch = useMemo(() => throttle(searchNowACB, 1000), [props.model]);
 
     return (
         <>
@@ -46,8 +57,8 @@ export const Search = observer(function Search(props) {
                 text = {searchText}
                 type = {searchDishType}
                 onType={setSearchTypeACB}
-                onText={setSearchTextACB}
-                onSearchDish={searchNowACB}
+                onText={debouncedTextInput}
+                onSearchDish={throttledSearch}
             />
             {searchData()}
         </>
