@@ -5,6 +5,8 @@ import { observer } from "mobx-react-lite"
 import { reactiveModel } from "src/bootstrapping";
 
 import { SuspenseView } from "src/views/suspenseView";
+import { Auth } from "src/presenters/authPresenter"
+
 
 export default
 observer(
@@ -24,6 +26,15 @@ function RootLayout() {
 
   function renderDetailsTabIconACB() {
     return <Text>📄</Text>
+  }
+
+  // Show loading while Firebase auth initializes
+  if (reactiveModel.user === undefined) {
+    return <SuspenseView promise="loading..." error={null} />
+  }
+  // Show auth screen if user is not logged in
+  if (reactiveModel.user === null) {
+    return <Auth model={reactiveModel} />
   }
 
   return reactiveModel.ready ? (

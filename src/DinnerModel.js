@@ -13,6 +13,7 @@ export const model = {
   searchParams: {},
   searchResultsPromiseState: {},
   currentDishPromiseState: {},
+  user: undefined,
 
   setCurrentDishId(dishId) {
     this.currentDishId = dishId
