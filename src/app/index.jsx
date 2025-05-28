@@ -20,3 +20,7 @@ export default observer(function IndexPage() {
     </ScrollView>*/
   )
 })
+
+
+
+
