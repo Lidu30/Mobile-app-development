@@ -45,6 +45,8 @@ export function SearchResultsView(props) {
         renderItem={renderSearchResult}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
+        onEndReached={props.loadMoreResults}
+        onEndReachedThreshold={0.5}
       />
     </View>
   )

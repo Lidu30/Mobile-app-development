@@ -9,12 +9,14 @@ export const Search = observer(function Search(props) {
     const searchResultsPromiseState = props.model.searchResultsPromiseState;
     const searchText = props.model.searchParams.query; 
     const searchDishType = props.model.searchParams.type; 
+    const offset = props.model.searchParams.offset;
 
     function searchData() {
         if (searchResultsPromiseState.data) {
             return <SearchResultsView 
                 searchResults = {searchResultsPromiseState.data}
                 dishChosen = {chooseDishACB}
+                loadMoreResults={loadMoreResultsACB}
             />
         }
 
@@ -31,20 +33,27 @@ export const Search = observer(function Search(props) {
 
     function setSearchTypeACB(newType) {
         props.model.setSearchType(newType)
+        props.model.setSearchOffset(0);
     }
 
     function setSearchTextACB(newText) {
         props.model.setSearchQuery(newText);
     }
 
+    function loadMoreResultsACB() {
+        props.model.setSearchOffset(offset + 10);
+        throttledSearch();
+    }
+
     function setDebouncedSearchTextACB(newText) {
         props.model.setSearchQuery(newText);
+        props.model.setSearchOffset(0);
         throttledSearch();
     }
 
     const debouncedTextInput = debounce(setDebouncedSearchTextACB, 250);
 
-    function searchNowACB() {
+    function searchNowACB() {      
         props.model.doSearch(props.model.searchParams);
     }
 
