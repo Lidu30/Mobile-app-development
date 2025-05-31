@@ -2,6 +2,8 @@ import { observer } from "mobx-react-lite";
 import { SearchFormView } from "src/views/searchFormView";
 import { SearchResultsView } from "src/views/searchResultsView";
 import { SuspenseView } from "src/views/suspenseView";
+// debounce - waits for a user to stop typing before triggering a function
+// throttle :  Ensures a function can only run once per time period(1 per sec in our case)
 import { debounce, throttle } from 'lodash';
 import { useMemo } from 'react';
 
