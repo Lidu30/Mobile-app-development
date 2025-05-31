@@ -1,16 +1,13 @@
-import {
-  Button,
-  FlatList,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native"
-import { router } from "expo-router"
-import { dishType, getCardStyle, menuPrice, sortDishes } from "src/utilities"
+import {Button, FlatList, Pressable, StyleSheet, Text, View} from "react-native";
+import {sortDishes, dishType, menuPrice, getCardStyle } from "src/utilities";
+import {router} from "expo-router"
+import { signOut } from "firebase/auth"
+import { auth } from "src/firestoreModel"
+export function SidebarView(props){
 
-export function SidebarView(props) {
+  function signOutACB() {
+  signOut(auth)
+  }
   function removePersonACB() {
     //console.log("Remove person");
     props.onNumberChange(props.number - 1)
@@ -20,45 +17,31 @@ export function SidebarView(props) {
     //console.log("Add person");
     props.onNumberChange(props.number + 1)
   }
-
+  
   function renderItemCB(element) {
     const dish = element.item
-
+    
     function displayDishACB() {
       // console.log(dish);
       props.onDishInterest(dish)
-      router.push("/details")
+      router.push('/details')
     }
-
+  
     function removeDishACB() {
       //console.log("Remove selected dish");
       props.onDishRemove(dish)
     }
 
     return (
-      <Pressable
-        onPress={displayDishACB}
-        testID="sidebar-row"
-        style={styles.card}
-      >
+      <Pressable onPress={displayDishACB} testID="sidebar-row" style={styles.card}>
         <View style={styles.dishRow}>
           <View style={styles.dishNameContainer}>
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={styles.dishName}
-            >
-              {dish.title}
-            </Text>
-            <Text numberOfLines={1} ellipsizeMode="tail">
-              {dishType(dish)}
-            </Text>
+            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.dishName}>{dish.title}</Text>
+            <Text numberOfLines={1} ellipsizeMode="tail">{dishType(dish)}</Text>
           </View>
           <View style={styles.priceContainer}>
             <View>
-              <Text style={styles.dishPrice}>
-                ${((dish.pricePerServing * props.number) / 100).toFixed(2)}
-              </Text>
+              <Text style={styles.dishPrice}>${(dish.pricePerServing * props.number /100).toFixed(2)}</Text>
             </View>
             <Pressable onPress={removeDishACB} testID="sidebar-row-remove">
               <Text style={styles.x}>✕</Text>
@@ -66,39 +49,35 @@ export function SidebarView(props) {
           </View>
         </View>
       </Pressable>
-    )
+    );
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.guestRow}>
-        <Button
-          title="-"
-          disabled={props.number === 1}
-          onPress={removePersonACB}
-        ></Button>
-        <Text style={styles.text}>
-          {props.number} {props.number === 1 ? "Guest" : "Guests"}
-        </Text>
-        <Button title="+" onPress={addPersonACB}></Button>
+    <View>
+      <View style={styles.header}>
+        <View style={styles.guestRow}>
+          <Button title="-" disabled={props.number === 1} onPress={removePersonACB}></Button>
+          <Text style={styles.text}>{props.number} {props.number === 1 ? "Guest" : "Guests"}</Text>
+          <Button title="+" onPress={addPersonACB}></Button>
+        </View>
+
+        <View style={styles.signOutContainer}>
+            <Button title="Sign Out" onPress={signOutACB} color=""/>
+        </View>
       </View>
 
       <FlatList
         data={sortDishes(props.dishes)}
         renderItem={renderItemCB}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{ flexGrow: 1 }}  
-        style={{ flex: 1 }}
-      />
-
+        keyExtractor={item => item.id} 
+      /> 
+      
       <View style={styles.dishRow}>
         <Text>Total: </Text>
-        <Text style={styles.dishName}>
-          ${((menuPrice(props.dishes) * props.number) / 100).toFixed(2)}
-        </Text>
-      </View>
+        <Text style={styles.dishName}>${(menuPrice(props.dishes)*props.number/100).toFixed(2)}</Text>
+      </View>     
     </View>
-  )
+  );
 }
 
 // Basic style
@@ -110,10 +89,19 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 8,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 8,
+    backgroundColor: "#f8f9fa",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e9ecef",
+  },
   guestRow: {
     flexDirection: "row",
     alignItems: "flex-end",
-    alignItems: "center",
+    //alignItems: "center",
     padding: 8,
     margin: 8,
   },
@@ -127,13 +115,13 @@ const styles = StyleSheet.create({
     ...getCardStyle(),
     padding: 10,
     backgroundColor: "#ffffff",
-    borderRadius: 8,
+    borderRadius:8,
     marginVertical: 8,
     margin: 8,
   },
   dishNameContainer: {
     flex: 1,
-    marginRight: 8,
+    marginRight: 8, 
   },
   dishName: {
     fontSize: 17,
@@ -158,4 +146,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "red",
   },
-})
+
+  signOutContainer: {
+    margin: 16,
+    marginTop: 32,
+  },
+});
