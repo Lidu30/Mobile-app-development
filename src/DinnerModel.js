@@ -10,7 +10,9 @@ export const model = {
   numberOfGuests: 2,
   dishes: [],
   currentDishId: null, // null means "intentionally empty"
-  searchParams: {},
+  searchParams: {
+    offset: 0,
+  },
   searchResultsPromiseState: {},
   currentDishPromiseState: {},
   user: undefined,
@@ -49,9 +51,32 @@ export const model = {
     this.searchParams.type = type
   },
 
+  setSearchOffset(offset) {
+    this.searchParams.offset = offset;
+  },
+
   doSearch(params) {
     const searchPromise = searchDishes(params)
-    resolvePromise(searchPromise, this.searchResultsPromiseState)
+    const isInitialSearch = !params.offset;
+    const self = this;
+
+    /*if (isInitialSearch) {
+      this.searchResultsPromiseState.data = null;
+      this.searchResultsPromiseState.error = null;
+    }*/
+    
+    resolvePromise(searchPromise, this.searchResultsPromiseState, transformData)
+  
+    function transformData(newResult) {
+      const previous = self.searchResultsPromiseState?.data || [];
+
+      if (isInitialSearch || previous.length === 0) {
+        return newResult;
+      }
+
+      return [...previous, ...(newResult || [])];
+    }
+  
   },
 
   currentDishEffect() {
@@ -60,6 +85,10 @@ export const model = {
       return;
     }
     const dishPromise = getDishDetails(this.currentDishId)
+
+    this.currentDishPromiseState.data = null;
+    this.currentDishPromiseState.error = null;
+
     resolvePromise(dishPromise, this.currentDishPromiseState)
   },
 

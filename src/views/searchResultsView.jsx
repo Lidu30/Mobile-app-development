@@ -45,6 +45,9 @@ export function SearchResultsView(props) {
         renderItem={renderSearchResult}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
+        // automatically when the user scrolls to 50% before the end
+        onEndReached={props.loadMoreResults}
+        onEndReachedThreshold={0.5}
       />
     </View>
   )

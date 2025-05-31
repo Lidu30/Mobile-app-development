@@ -1,6 +1,6 @@
-export function resolvePromise(prms, promiseState){
+export function resolvePromise(prms, promiseState, transformData){
     promiseState.promise = prms;
-    promiseState.data = null;
+    // promiseState.data = null;
     promiseState.error = null;
 
     if (!prms){
@@ -8,9 +8,9 @@ export function resolvePromise(prms, promiseState){
     }
 
     function successACB(result){
-        if(promiseState.promise===prms){
-            promiseState.data=result;
-            //promiseState.loading=false;
+        if(promiseState.promise===prms) {
+            promiseState.data = typeof transformData === "function" ?
+                transformData(result) : result;
         }
     }
     

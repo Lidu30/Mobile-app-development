@@ -11,12 +11,15 @@ export const Search = observer(function Search(props) {
     const searchResultsPromiseState = props.model.searchResultsPromiseState;
     const searchText = props.model.searchParams.query; 
     const searchDishType = props.model.searchParams.type; 
+    // in order to request the correct page of results
+    const offset = props.model.searchParams.offset;
 
     function searchData() {
         if (searchResultsPromiseState.data) {
             return <SearchResultsView 
                 searchResults = {searchResultsPromiseState.data}
                 dishChosen = {chooseDishACB}
+                loadMoreResults={loadMoreResultsACB}
             />
         }
 
@@ -33,23 +36,36 @@ export const Search = observer(function Search(props) {
 
     function setSearchTypeACB(newType) {
         props.model.setSearchType(newType)
+        props.model.setSearchOffset(0);
     }
 
+    // decouncing
     function setSearchTextACB(newText) {
         props.model.setSearchQuery(newText);
     }
 
-    function setDebouncedSearchTextACB(newText) {
-        props.model.setSearchQuery(newText);
+    // infinite-increases the offset and perform another search
+    function loadMoreResultsACB() {
+        props.model.setSearchOffset(offset + 10);
         throttledSearch();
     }
 
+    function setDebouncedSearchTextACB(newText) {
+        props.model.setSearchQuery(newText);
+        props.model.setSearchOffset(0);
+        // triggers the actual search
+        throttledSearch();
+    }
+
+    // waits 250 ms after the user stops before calling the function
     const debouncedTextInput = debounce(setDebouncedSearchTextACB, 250);
 
-    function searchNowACB() {
+    function searchNowACB() {      
         props.model.doSearch(props.model.searchParams);
     }
 
+    // creates throrrled version of search now
+    // runs at most once per sec(no more than 1 search per sec)
     const throttledSearch = useMemo(() => throttle(searchNowACB, 1000), [props.model]);
 
     return (
