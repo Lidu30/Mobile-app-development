@@ -4,8 +4,8 @@ import { SearchResultsView } from "src/views/searchResultsView";
 import { SuspenseView } from "src/views/suspenseView";
 // debounce - waits for a user to stop typing before triggering a function
 // throttle :  Ensures a function can only run once per time period(1 per sec in our case)
-import { debounce, throttle } from 'lodash';
-import { useMemo } from 'react';
+// import { debounce, throttle } from 'lodash';
+// import { useMemo } from 'react';
 
 export const Search = observer(function Search(props) {
     const searchResultsPromiseState = props.model.searchResultsPromiseState;
@@ -57,6 +57,27 @@ export const Search = observer(function Search(props) {
         throttledSearch();
     }
 
+    function debounce(func, delay) {
+        let timeoutId;
+        return function(...args) {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+            func.apply(this, args);
+            }, delay);
+        };
+    }
+
+    function throttle(func, delay) {
+        let lastCall = 0;  
+        return function(...args) {
+            const now = Date.now(); 
+            if (now - lastCall >= delay) {
+                lastCall = now;
+                func.apply(this, args);
+            }
+        };
+    }
+
     // waits 250 ms after the user stops before calling the function
     const debouncedTextInput = debounce(setDebouncedSearchTextACB, 250);
 
@@ -66,7 +87,7 @@ export const Search = observer(function Search(props) {
 
     // creates throrrled version of search now
     // runs at most once per sec(no more than 1 search per sec)
-    const throttledSearch = useMemo(() => throttle(searchNowACB, 1000), [props.model]);
+    const throttledSearch = throttle(searchNowACB, 1000);
 
     return (
         <>
