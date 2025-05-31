@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import { AuthView } from "src/views/authView"
 import { auth } from "src/firestoreModel"
 
-export const Auth = observer(function Auth(props) {
+export const Auth = observer(function Auth() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")

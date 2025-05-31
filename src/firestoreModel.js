@@ -74,11 +74,13 @@ export function connectToPersistence(model, watchFunction) {
         }).catch(errorACB);
     }
 
+    // this is for every time a user logs in or logs out
     onAuthStateChanged(auth, function authChangeACB(user) {
         model.user = user;
         
         if (user) {
             readFromPersistenceACB();
+        //if the user just signed up
         } else {
             model.numberOfGuests = 2;
             model.dishes = [];
